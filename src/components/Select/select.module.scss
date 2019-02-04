@@ -1,0 +1,88 @@
+$paddingRight: 2em;
+
+.inputContainer {
+    position: relative;
+    padding-right: $paddingRight;
+}
+
+.input {
+    width: calc(100% - 16px);
+    font-size: 14px;
+    word-wrap: break-word;
+    line-height: 1em;
+    outline: 0;
+    white-space: normal;
+    min-height: 2em;
+    display: inline-block;
+    padding: .5em $paddingRight .5em 1em;
+    color: rgba(0, 0, 0, .87);
+    box-shadow: none;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: .3rem;
+    transition: box-shadow .1s ease, width .1s ease;
+
+    &:hover, &:focus {
+        border-color: #96c8da;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, .15);
+    }
+}
+
+.input--open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    cursor: pointer;
+    outline: 0;
+}
+
+.list {
+    max-height: 20rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-top-width: 0;
+    outline: 0;
+    border-radius: 0 0 .28571429rem .28571429rem;
+    transition: opacity .1s ease;
+    box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+    border-color: #96c8da;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-style: solid;
+}
+
+.listItem {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    border: none;
+    height: auto;
+    text-align: left;
+    border-top: none;
+    line-height: 1em;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1rem;
+    text-transform: none;
+    font-weight: 400;
+    box-shadow: none;
+    padding: 0.8rem 1.1rem;
+    white-space: normal;
+    word-wrap: normal;
+}
+
+.listItem--active {
+    color: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.listItem--selected {
+    color: rgba(0, 0, 0, 0.95);
+    font-weight: 700;
+}
