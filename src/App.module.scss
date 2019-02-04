@@ -2,6 +2,11 @@
 @import "styles/shared/colors";
 @import "styles/owfont/css/owfont-regular.css";
 
+input[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .App {
 }
 
@@ -10,3 +15,9 @@
 
 .content {
 }
+
+.form {
+    display: flex;
+}
+
+

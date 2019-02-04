@@ -12,6 +12,7 @@ class App extends Component {
             longitude: null,
             country: null,
             city: '',
+            msg: '',
         };
     }
 
@@ -32,8 +33,19 @@ class App extends Component {
             })
             .catch(err => console.error(err));
 
+    handleSearchSubmit = e => {
+        e.preventDefault();
+        const { country, city } = this.state;
+        if (!country) {
+            return this.setState({ msg: 'Please select country'});
+        }
+        if (!city) {
+            return this.setState({ msg: 'Please enter city name'});
+        }
+    };
+
     render() {
-        const { country } = this.state;
+        const { country, msg } = this.state;
 
         return (
             <div className={styles.App}>
@@ -41,8 +53,13 @@ class App extends Component {
                     <h1>Weather forecast</h1>
                 </header>
                 <main role="main">
-                    <CountriesSelect onSelect={this.setCountry} />
-                    <input type="text" placeholder="City" disabled={!country} />
+                    <p>{msg ? msg : 'Please fill the form to get forecase for the location'}</p>
+
+                    <form onSubmit={this.handleSearchSubmit} className={styles.form}>
+                        <CountriesSelect onSelect={this.setCountry} />
+                        <input type="text" placeholder="City" disabled={!country} />
+                        <input type="submit" value="Search" />
+                    </form>
                     <button onClick={this.requestLocation}>Use my location</button>
                 </main>
             </div>
