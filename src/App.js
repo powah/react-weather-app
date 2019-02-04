@@ -57,7 +57,7 @@ class App extends Component {
         );
     };
 
-    getMsg = () => {
+    renderMsg = () => {
         const { error, msg } = this.state;
         if (error) {
             return <p className={cn(styles.msg, styles.err)}>{error}</p>;
@@ -78,7 +78,7 @@ class App extends Component {
                     <h1>Weather forecast</h1>
                 </header>
                 <main role="main" className={styles.content}>
-                    {this.getMsg()}
+                    {this.renderMsg()}
 
                     <form onSubmit={this.handleSearchSubmit} className={styles.form}>
                         <CountriesSelect onSelect={this.handleCountry} items={countries} className={styles.formItem} />
