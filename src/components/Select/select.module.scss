@@ -1,5 +1,9 @@
 $paddingRight: 2em;
 
+.container {
+    position: relative;
+}
+
 .inputContainer {
     position: relative;
     padding-right: $paddingRight;
@@ -7,24 +11,8 @@ $paddingRight: 2em;
 
 .input {
     width: calc(100% - 16px);
-    font-size: 14px;
-    word-wrap: break-word;
-    line-height: 1em;
-    outline: 0;
-    white-space: normal;
-    min-height: 2em;
     display: inline-block;
-    padding: .5em $paddingRight .5em 1em;
-    color: rgba(0, 0, 0, .87);
-    box-shadow: none;
-    border: 1px solid rgba(34, 36, 38, .15);
-    border-radius: .3rem;
-    transition: box-shadow .1s ease, width .1s ease;
-
-    &:hover, &:focus {
-        border-color: #96c8da;
-        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, .15);
-    }
+    padding-right: $paddingRight !important;
 }
 
 .input--open {
@@ -43,6 +31,10 @@ $paddingRight: 2em;
 }
 
 .list {
+    position: absolute;
+    top: 44px;
+    z-index: 1;
+    background: #fff;
     max-height: 20rem;
     overflow-y: auto;
     overflow-x: hidden;

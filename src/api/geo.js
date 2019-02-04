@@ -1,7 +1,12 @@
 import qs from 'querystringify';
+import countries from './countries';
 
 const OPEN_WEATHER_URI = 'http://api.openweathermap.org/data/2.5';
 const OPEN_WEATHER_API_KEY = 'c6d4990b43e214e07ea5854d76feef3b';
+
+export const getCountries = () => countries;
+
+export const getCountryByCode = alpha2 => getCountries().find(country => country.alpha2 === alpha2);
 
 /**
  * Get current position of the device.
@@ -37,7 +42,19 @@ export const getCurrentWeatherForCity = city => {
     const params = {
         q: city,
         units: 'metric',
-        lang: 'lt',
+        lang: 'en',
+        appid: OPEN_WEATHER_API_KEY,
+    };
+
+    return fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`).then(res => res.json());
+};
+
+export const getCurrentWeatherByCoords = (lat, lon) => {
+    const params = {
+        lat,
+        lon,
+        units: 'metric',
+        lang: 'en',
         appid: OPEN_WEATHER_API_KEY,
     };
 
