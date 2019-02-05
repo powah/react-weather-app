@@ -1,7 +1,5 @@
-@import "~normalize.css";
-@import "styles/shared/colors";
-@import "styles/shared/constants";
-@import "styles/owfont/css/owfont-regular.css";
+@import 'styles/shared/colors';
+@import 'styles/shared/constants';
 
 body {
     background: $staticColor;
@@ -11,36 +9,6 @@ body {
 
 :global(#root) {
     min-height: 100vh;
-}
-
-input {
-    padding: .5em 1em;
-    word-wrap: break-word;
-    line-height: 1em;
-    outline: 0;
-    white-space: normal;
-    min-height: 2em;
-    color: rgba(0, 0, 0, .87);
-    box-shadow: none;
-    border: 1px solid rgba(34, 36, 38, .15);
-    border-radius: .3rem;
-    transition: box-shadow .1s ease, width .1s ease;
-
-    &:hover, &:focus {
-        border-color: #96c8da;
-        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, .15);
-    }
-
-    &[disabled] {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-}
-
-input[type=submit],
-button {
-    background-color: $primaryColor;
-    color: $staticColor;
 }
 
 .App {
@@ -61,37 +29,12 @@ button {
     padding: 8px;
 }
 
+.contentBody {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
 .footer {
     padding: 8px;
     background: $staticColor;
 }
-
-.form {
-    display: flex;
-    flex-direction: column;
-    @media (min-width: 500px) {
-        flex-direction: row;
-    }
-}
-
-.msg {
-    background: $warningColor;
-    padding: 5px 10px;
-    border-radius: 0.3rem;
-    display: inline-block;
-    transition: background-color 0.5s ease;
-}
-
-.err {
-    background: $dangerColor;
-    color: $staticColor;
-}
-
-.formItem {
-    margin: 2px 0;
-    @media (min-width: 500px) {
-        margin: 0 2px;
-    }
-}
-
-

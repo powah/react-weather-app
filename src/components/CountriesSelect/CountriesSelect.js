@@ -15,7 +15,7 @@ CountriesSelect.propTypes = {
         PropTypes.shape({
             label: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
-        }),
+        })
     ).isRequired,
 };
 

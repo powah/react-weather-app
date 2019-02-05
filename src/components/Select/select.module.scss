@@ -32,7 +32,9 @@ $paddingRight: 2em;
 
 .list {
     position: absolute;
-    top: 44px;
+    top: 52px;
+    left: 0;
+    right: 0;
     z-index: 1;
     background: #fff;
     max-height: 20rem;
@@ -40,9 +42,9 @@ $paddingRight: 2em;
     overflow-x: hidden;
     border-top-width: 0;
     outline: 0;
-    border-radius: 0 0 .28571429rem .28571429rem;
-    transition: opacity .1s ease;
-    box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+    border-radius: 0 0 0.28571429rem 0.28571429rem;
+    transition: opacity 0.1s ease;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
     border-color: #96c8da;
     border-right-width: 1px;
     border-bottom-width: 1px;
@@ -67,6 +69,7 @@ $paddingRight: 2em;
     padding: 0.8rem 1.1rem;
     white-space: normal;
     word-wrap: normal;
+    width: 100%;
 }
 
 .listItem--active {

@@ -1,4 +1,6 @@
 import 'react-app-polyfill/ie9';
+import 'normalize.css';
+import './styles/owfont/css/owfont-regular.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

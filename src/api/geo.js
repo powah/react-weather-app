@@ -45,8 +45,8 @@ export const getCurrentWeatherForCity = city => {
         lang: 'en',
         appid: OPEN_WEATHER_API_KEY,
     };
-
-    return fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`).then(res => res.json());
+    const request = fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`);
+    return callOpenWeatherApi(request);
 };
 
 export const getCurrentWeatherByCoords = (lat, lon) => {
@@ -58,5 +58,24 @@ export const getCurrentWeatherByCoords = (lat, lon) => {
         appid: OPEN_WEATHER_API_KEY,
     };
 
-    return fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`).then(res => res.json());
+    const request = fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`);
+    return callOpenWeatherApi(request);
 };
+
+const callOpenWeatherApi = request =>
+    request.then(res => {
+        if (res.status === 200) {
+            return res.json();
+        } else {
+            // handle API errors
+            const defaultError = 'Unable to fetch weather data';
+            return res.json().then(
+                error => {
+                    throw new Error(error.message || defaultError);
+                },
+                () => {
+                    throw new Error(defaultError);
+                }
+            );
+        }
+    });

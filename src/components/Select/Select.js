@@ -56,7 +56,7 @@ class Select extends React.Component {
                                         .filter(
                                             ({ label }) =>
                                                 !inputValue ||
-                                                label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1,
+                                                label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
                                         )
                                         .map((item, index) => (
                                             <div
@@ -95,7 +95,7 @@ Select.propTypes = {
         PropTypes.shape({
             value: PropTypes.string.isRequired,
             label: PropTypes.string.isRequired,
-        }),
+        })
     ).isRequired,
 };
 
