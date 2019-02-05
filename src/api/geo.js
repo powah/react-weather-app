@@ -75,7 +75,7 @@ const callOpenWeatherApi = request =>
                 },
                 () => {
                     throw new Error(defaultError);
-                }
+                },
             );
         }
     });

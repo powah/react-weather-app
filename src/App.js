@@ -20,14 +20,14 @@ class App extends Component {
             .then(({ coords }) => {
                 const { latitude, longitude } = coords;
                 GeoApi.getCurrentWeatherByCoords(latitude, longitude).then(forecast =>
-                    this.setState({ latitude, longitude, forecast: mapForecastToProps(forecast) })
+                    this.setState({ latitude, longitude, forecast: mapForecastToProps(forecast) }),
                 );
             })
             .catch(err => console.error(err));
 
     onSubmit = (country, city) =>
         GeoApi.getCurrentWeatherForCity(city + ',' + country.value).then(forecast =>
-            this.setState({ forecast: mapForecastToProps(forecast) })
+            this.setState({ forecast: mapForecastToProps(forecast) }),
         );
 
     render() {
@@ -44,7 +44,7 @@ class App extends Component {
                         {forecast && <ForeCast {...forecast} />}
                     </div>
                 </main>
-                <footer className={styles.footer}>&copy; No rights reserverd :)</footer>
+                <footer className={styles.footer}>&copy; No rights reserved :)</footer>
             </div>
         );
     }

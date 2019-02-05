@@ -36,7 +36,12 @@ class Select extends React.Component {
                                     })}
                                 />
                                 {selectedItem ? (
-                                    <a href="#" className={styles.button} onClick={clearSelection} aria-label="clear selection">
+                                    <a
+                                        href="#"
+                                        className={styles.button}
+                                        onClick={clearSelection}
+                                        aria-label="clear selection"
+                                    >
                                         <ClearIcon />
                                     </a>
                                 ) : (

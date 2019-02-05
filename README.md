@@ -1,5 +1,9 @@
 # React Weather SPA bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and using public weather API.
 
+## Demo
+
+Can be seen here: [https://react-openweather-app.netlify.com](https://react-openweather-app.netlify.com)
+
 ## Available Scripts
 
 In the project directory, you can run:
