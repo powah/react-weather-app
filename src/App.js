@@ -4,25 +4,6 @@ import SearchForm from './components/SearchForm';
 import ForeCast from './components/ForeCast';
 import styles from './App.module.scss';
 
-const mapForecastToProps = forecast => {
-    if (!forecast) {
-        return null;
-    }
-    const { clouds, main, weather, wind, name } = forecast;
-
-    return {
-        location: name,
-        temperature: main && main.temp,
-        icon: weather && String(weather[0].id),
-        description: weather && weather[0].description,
-        cloudiness: clouds && clouds.all,
-        humidity: main && main.humidity,
-        pressure: main && main.pressure,
-        windSpeed: wind && wind.speed,
-        windDeg: wind && wind.deg,
-    };
-};
-
 class App extends Component {
     state = {
         latitude: null,
@@ -68,5 +49,23 @@ class App extends Component {
         );
     }
 }
+
+const mapForecastToProps = forecast => {
+    if (!forecast) {
+        return null;
+    }
+    const { clouds, main, weather, wind, name } = forecast;
+    return {
+        location: name,
+        temperature: main && main.temp,
+        icon: weather && String(weather[0].id),
+        description: weather && weather[0].description,
+        cloudiness: clouds && clouds.all,
+        humidity: main && main.humidity,
+        pressure: main && main.pressure,
+        windSpeed: wind && wind.speed,
+        windDeg: wind && wind.deg,
+    };
+};
 
 export default App;

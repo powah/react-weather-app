@@ -40,7 +40,6 @@ class SearchForm extends React.Component {
         }
 
         this.setState({ error: '', msg: msg.searchInProgress });
-
         this.props
             .onSubmit(country, city)
             .then(() => this.setState({ msg: msg.searchCompleted }), err => this.setState({ error: err.message }));

@@ -1,7 +1,7 @@
 import qs from 'querystringify';
 import countries from './countries';
 
-const OPEN_WEATHER_URI = 'http://api.openweathermap.org/data/2.5';
+const OPEN_WEATHER_URI = 'https://api.openweathermap.org/data/2.5';
 const OPEN_WEATHER_API_KEY = 'c6d4990b43e214e07ea5854d76feef3b';
 
 export const getCountries = () => countries;

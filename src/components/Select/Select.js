@@ -36,13 +36,9 @@ class Select extends React.Component {
                                     })}
                                 />
                                 {selectedItem ? (
-                                    <button
-                                        className={styles.button}
-                                        onClick={clearSelection}
-                                        aria-label="clear selection"
-                                    >
+                                    <a href="#" className={styles.button} onClick={clearSelection} aria-label="clear selection">
                                         <ClearIcon />
-                                    </button>
+                                    </a>
                                 ) : (
                                     <button className={styles.button} {...getToggleButtonProps()}>
                                         <ArrowIcon isOpen={isOpen} />
@@ -56,7 +52,7 @@ class Select extends React.Component {
                                         .filter(
                                             ({ label }) =>
                                                 !inputValue ||
-                                                label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+                                                label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1,
                                         )
                                         .map((item, index) => (
                                             <div
@@ -95,7 +91,7 @@ Select.propTypes = {
         PropTypes.shape({
             value: PropTypes.string.isRequired,
             label: PropTypes.string.isRequired,
-        })
+        }),
     ).isRequired,
 };
 
