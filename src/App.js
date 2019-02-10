@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as GeoApi from './api/geo';
 import SearchForm from './components/SearchForm';
 import ForeCast from './components/ForeCast';
+import Map from './components/Map';
 import styles from './App.module.scss';
 
 class App extends Component {
@@ -27,11 +28,15 @@ class App extends Component {
 
     onSubmit = (country, city) =>
         GeoApi.getCurrentWeatherForCity(city + ',' + country.value).then(forecast =>
-            this.setState({ forecast: mapForecastToProps(forecast) }),
+            this.setState({
+                latitude: forecast.coord.lat,
+                longitude: forecast.coord.lng,
+                forecast: mapForecastToProps(forecast),
+            }),
         );
 
     render() {
-        const { forecast } = this.state;
+        const { forecast, latitude, longitude } = this.state;
 
         return (
             <div className={styles.App}>
@@ -43,6 +48,7 @@ class App extends Component {
                         <SearchForm onSubmit={this.onSubmit} />
                         {forecast && <ForeCast {...forecast} />}
                     </div>
+                    {latitude && longitude && <Map lat={latitude} lng={longitude} className={styles.map} />}
                 </main>
                 <footer className={styles.footer}>&copy; No rights reserved :)</footer>
             </div>

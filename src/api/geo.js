@@ -62,6 +62,19 @@ export const getCurrentWeatherByCoords = (lat, lon) => {
     return callOpenWeatherApi(request);
 };
 
+export const getCurrentWeatherByBoundingBox = (westLng, northLat, eastLng, southLat, zoom) => {
+    const params = {
+        bbox: [westLng, northLat, eastLng, southLat, zoom].join(','),
+        cluster: 'yes',
+        units: 'metric',
+        lang: 'en',
+        appid: OPEN_WEATHER_API_KEY,
+    };
+
+    const request = fetch(`${OPEN_WEATHER_URI}/box/city?${qs.stringify(params)}`);
+    return callOpenWeatherApi(request);
+};
+
 const callOpenWeatherApi = request =>
     request.then(res => {
         if (res.status === 200) {
