@@ -48,7 +48,7 @@ class App extends Component {
                         <SearchForm onSubmit={this.onSubmit} />
                         {forecast && <ForeCast {...forecast} />}
                     </div>
-                    {latitude && longitude && <Map lat={latitude} lng={longitude} className={styles.map} />}
+                    <Map lat={latitude} lng={longitude} className={styles.map} />
                 </main>
                 <footer className={styles.footer}>&copy; No rights reserved :)</footer>
             </div>
