@@ -38,10 +38,7 @@ class App extends Component {
     };
 
     saveToFavorites = e => {
-        if (!this.showSaveToFavorites()) {
-            return undefined;
-        }
-
+        e.preventDefault();
         const { favorites, city, country, forecast } = this.state;
         const newFavorites = [...favorites, { id: forecast.id, country, city }];
         this.setState({ favorites: newFavorites });
@@ -89,27 +86,30 @@ class App extends Component {
                     <div className={styles.headerContent}>
                         <h1>Weather forecast</h1>
                         {favorites && favorites.length > 0 && (
-                            <div className={styles.favorites}>
-                                <form>
-                                    <select
-                                        onChange={this.handleFavoriteSearch}
-                                        value={country && city ? city + ',' + country.value : ''}
-                                    >
-                                        {favorites.map(({ country, city }) => (
-                                            <option key={city + ',' + country.value} value={city + ',' + country.value}>
-                                                {city + ', ' + country.value}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </form>
-                            </div>
+                            <form>
+                                <select
+                                    onChange={this.handleFavoriteSearch}
+                                    value={country && city ? city + ',' + country.value : ''}
+                                >
+                                    {favorites.map(({ country, city }) => (
+                                        <option key={city + ',' + country.value} value={city + ',' + country.value}>
+                                            {city + ', ' + country.value}
+                                        </option>
+                                    ))}
+                                </select>
+                            </form>
                         )}
                     </div>
                 </header>
                 <main role="main" className={styles.content}>
                     <div className={styles.contentBody}>
                         <SearchForm onSubmit={this.onSubmit} />
-                        {forecast && <ForeCast {...forecast} onLocationSave={this.saveToFavorites} />}
+                        {forecast && (
+                            <ForeCast
+                                {...forecast}
+                                onLocationSave={this.showSaveToFavorites() ? this.saveToFavorites : undefined}
+                            />
+                        )}
                     </div>
                     <Map lat={latitude} lng={longitude} className={styles.map} />
                 </main>

@@ -30,17 +30,6 @@ body {
     align-items: center;
 }
 
-.favorites {
-    position: relative;
-}
-
-.favoritesList {
-    position: absolute;
-    flex: 0;
-    max-height: 300px;
-    overflow-y: scroll;
-}
-
 .content {
     flex: 1;
     padding: 8px;
