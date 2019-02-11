@@ -1,52 +1,115 @@
 import React, { Component } from 'react';
 import * as GeoApi from './api/geo';
+import { storageAvailable } from './utils/storage';
 import SearchForm from './components/SearchForm';
 import ForeCast from './components/ForeCast';
 import Map from './components/Map';
 import styles from './App.module.scss';
 
+const isStorageAvailable = storageAvailable('localStorage');
+
 class App extends Component {
-    state = {
-        latitude: null,
-        longitude: null,
-        forecast: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            latitude: null,
+            longitude: null,
+            forecast: null,
+            favorites: this.getFavorites(),
+        };
+    }
 
     componentDidMount() {
         this.requestLocation();
     }
+
+    getFavorites = () => {
+        if (!isStorageAvailable) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(localStorage.getItem('favorites')) || [];
+        } catch (e) {
+            console.warn(e);
+        }
+
+        return [];
+    };
+
+    saveToFavorites = e => {
+        if (!this.showSaveToFavorites()) {
+            return undefined;
+        }
+
+        const { favorites, city, country, forecast } = this.state;
+        const newFavorites = [...favorites, { id: forecast.id, country, city }];
+        this.setState({ favorites: newFavorites });
+        try {
+            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+        } catch (e) {
+            console.warn(e);
+        }
+    };
+
+    showSaveToFavorites = () => {
+        if (!isStorageAvailable) {
+            return false;
+        }
+        const { favorites, forecast } = this.state;
+        return forecast ? forecast && !favorites.find(fav => fav.id === forecast.id) : false;
+    };
+
+    handleFavoriteSearch = e => {
+        const [city, country] = e.target.value.split(',');
+        this.onSubmit(country, city);
+    };
 
     requestLocation = () =>
         GeoApi.getCurrentPosition()
             .then(({ coords }) => {
                 const { latitude, longitude } = coords;
                 GeoApi.getCurrentWeatherByCoords(latitude, longitude).then(forecast =>
-                    this.setState({ latitude, longitude, forecast: mapForecastToProps(forecast) }),
+                    this.setState(mapForecastToState(forecast)),
                 );
             })
             .catch(err => console.error(err));
 
     onSubmit = (country, city) =>
         GeoApi.getCurrentWeatherForCity(city + ',' + country.value).then(forecast =>
-            this.setState({
-                latitude: forecast.coord.lat,
-                longitude: forecast.coord.lng,
-                forecast: mapForecastToProps(forecast),
-            }),
+            this.setState(mapForecastToState(forecast)),
         );
 
     render() {
-        const { forecast, latitude, longitude } = this.state;
+        const { forecast, latitude, longitude, favorites, country, city } = this.state;
 
         return (
             <div className={styles.App}>
                 <header className={styles.header}>
-                    <h1>Weather forecast</h1>
+                    <div className={styles.headerContent}>
+                        <h1>Weather forecast</h1>
+                        {favorites && favorites.length > 0 && (
+                            <div className={styles.favorites}>
+                                <form>
+                                    <select
+                                        onChange={this.handleFavoriteSearch}
+                                        value={country && city ? city + ',' + country.value : ''}
+                                    >
+                                        {favorites.map(({ country, city }) => (
+                                            <option key={city + ',' + country.value} value={city + ',' + country.value}>
+                                                {city + ', ' + country.value}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </form>
+                            </div>
+                        )}
+                    </div>
                 </header>
                 <main role="main" className={styles.content}>
                     <div className={styles.contentBody}>
                         <SearchForm onSubmit={this.onSubmit} />
-                        {forecast && <ForeCast {...forecast} />}
+                        {forecast && <ForeCast {...forecast} onLocationSave={this.saveToFavorites} />}
                     </div>
                     <Map lat={latitude} lng={longitude} className={styles.map} />
                 </main>
@@ -56,21 +119,35 @@ class App extends Component {
     }
 }
 
-const mapForecastToProps = forecast => {
+const mapForecastToState = forecast => {
     if (!forecast) {
-        return null;
+        return {};
     }
-    const { clouds, main, weather, wind, name } = forecast;
+
+    const { id, clouds, main, weather, wind, name, coord, sys } = forecast;
+    const countryByCode = GeoApi.getCountryByCode(sys.country);
     return {
-        location: name,
-        temperature: main && main.temp,
-        icon: weather && String(weather[0].id),
-        description: weather && weather[0].description,
-        cloudiness: clouds && clouds.all,
-        humidity: main && main.humidity,
-        pressure: main && main.pressure,
-        windSpeed: wind && wind.speed,
-        windDeg: wind && wind.deg,
+        latitude: coord.lat,
+        longitude: coord.lon,
+        city: name,
+        country: countryByCode
+            ? {
+                  label: countryByCode.name,
+                  value: countryByCode.alpha2,
+              }
+            : null,
+        forecast: {
+            id,
+            location: name,
+            temperature: main && main.temp,
+            icon: weather && String(weather[0].id),
+            description: weather && weather[0].description,
+            cloudiness: clouds && clouds.all,
+            humidity: main && main.humidity,
+            pressure: main && main.pressure,
+            windSpeed: wind && wind.speed,
+            windDeg: wind && wind.deg,
+        },
     };
 };
 

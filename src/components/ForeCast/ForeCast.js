@@ -5,7 +5,19 @@ import WeatherIcon from './WeatherIcon';
 import styles from './forecast.module.scss';
 
 function ForeCast(props) {
-    const { location, temperature, icon, description, cloudiness, humidity, pressure, windSpeed, windDeg } = props;
+    const {
+        location,
+        temperature,
+        icon,
+        description,
+        cloudiness,
+        humidity,
+        pressure,
+        windSpeed,
+        windDeg,
+        onLocationSave,
+    } = props;
+
     return (
         <div className={styles.container}>
             <div className={styles.summary}>
@@ -15,7 +27,14 @@ function ForeCast(props) {
                 <div className={styles.temperature}>{temperature} °C</div>
             </div>
             <div>
-                <div className={styles.location}>{location}</div>
+                <div className={styles.location}>
+                    {location}{' '}
+                    {onLocationSave && (
+                        <button type="button" onClick={onLocationSave} className={styles.save}>
+                            save to favorites
+                        </button>
+                    )}
+                </div>
                 <div className={styles.description}>{description}</div>
 
                 <div className={styles.item}>
@@ -49,6 +68,7 @@ function ForeCast(props) {
 }
 
 ForeCast.propTypes = {
+    onLocationSave: PropTypes.func,
     location: PropTypes.string.isRequired,
     temperature: PropTypes.number.isRequired,
     icon: PropTypes.string.isRequired,

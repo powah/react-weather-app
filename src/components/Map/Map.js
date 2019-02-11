@@ -36,7 +36,7 @@ class Map extends React.Component {
 
     initMap = () => {
         const { lat, lng } = this.props;
-        if (lat == null || lng == null || !google) {
+        if (lat == null || lng == null || !window.google) {
             return;
         }
 
@@ -49,7 +49,7 @@ class Map extends React.Component {
         google.maps.event.addListener(map, 'idle', this.requestData);
 
         // Populates the info window with details
-        map.data.addListener('click', function(event) {
+        map.data.addListener('mouseover', function(event) {
             const icon = event.feature.getProperty('icon');
             const city = event.feature.getProperty('city');
             const temperature = event.feature.getProperty('temperature');
@@ -141,11 +141,6 @@ class Map extends React.Component {
         return <div ref={this.ref} className={this.props.className} />;
     }
 }
-
-Map.defaultProps = {
-    lat: 50,
-    lng: -50,
-};
 
 Map.propTypes = {
     className: PropTypes.string,
