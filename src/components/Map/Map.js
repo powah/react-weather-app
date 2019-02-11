@@ -6,7 +6,6 @@ import { getCurrentWeatherByBoundingBox } from '../../api/geo';
 
 class Map extends React.Component {
     ref = React.createRef();
-    isRequestInProgress = false;
 
     componentDidMount() {
         load(
@@ -37,12 +36,12 @@ class Map extends React.Component {
 
     initMap = () => {
         const { lat, lng } = this.props;
-        if (lat == null || lng == null) {
+        if (lat == null || lng == null || !google) {
             return;
         }
 
         const map = (this.map = new google.maps.Map(this.ref.current, {
-            zoom: 10,
+            zoom: 12,
             center: new google.maps.LatLng(lat, lng),
         }));
         const infoWindow = new google.maps.InfoWindow();
@@ -76,11 +75,6 @@ class Map extends React.Component {
     };
 
     requestData = () => {
-        if (this.isRequestInProgress || !this.map) {
-            return;
-        }
-
-        this.isRequestInProgress = true;
         const map = this.map;
         const bounds = map.getBounds();
         const NE = bounds.getNorthEast();
@@ -88,7 +82,6 @@ class Map extends React.Component {
 
         getCurrentWeatherByBoundingBox(NE.lat(), NE.lng(), SW.lat(), SW.lng(), map.getZoom())
             .then(results => {
-                this.isRequestInProgress = false;
                 const { list } = results;
                 if (!list || !list.length) {
                     return;
@@ -104,7 +97,6 @@ class Map extends React.Component {
                 });
             })
             .catch(err => {
-                this.isRequestInProgress = false;
                 console.warn(err);
             });
     };
@@ -149,6 +141,11 @@ class Map extends React.Component {
         return <div ref={this.ref} className={this.props.className} />;
     }
 }
+
+Map.defaultProps = {
+    lat: 50,
+    lng: -50,
+};
 
 Map.propTypes = {
     className: PropTypes.string,

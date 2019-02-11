@@ -62,7 +62,7 @@ export const getCurrentWeatherByCoords = (lat, lon) => {
     return callOpenWeatherApi(request);
 };
 
-export const getCurrentWeatherByBoundingBox = (westLng, northLat, eastLng, southLat, zoom) => {
+export const getCurrentWeatherByBoundingBox = (northLat, eastLng, southLat, westLng, zoom) => {
     const params = {
         bbox: [westLng, northLat, eastLng, southLat, zoom].join(','),
         cluster: 'yes',
