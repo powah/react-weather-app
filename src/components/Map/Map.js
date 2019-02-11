@@ -8,7 +8,11 @@ class Map extends React.Component {
     isRequestInProgress = false;
 
     componentDidMount() {
-        load('https://maps.googleapis.com/maps/api/js', this.initMap, this);
+        load(
+            'https://maps.googleapis.com/maps/api/js?key=' + process.env.REACT_APP_GOOGLE_MAPS_KEY,
+            this.initMap,
+            this,
+        );
     }
 
     componentWillUnmount() {
