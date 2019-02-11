@@ -22,7 +22,7 @@ class Map extends React.Component {
         const { lat, lng } = this.props;
         const google = window.google;
         const map = (this.map = new google.maps.Map(this.ref.current, {
-            zoom: 4,
+            zoom: 10,
             center: new google.maps.LatLng(lat, lng),
         }));
         const infoWindow = new google.maps.InfoWindow();
@@ -51,7 +51,7 @@ class Map extends React.Component {
                     // add data layer
                     map.data.addGeoJson({
                         type: 'FeatureCollection',
-                        features: list.forEach(feature => toGeoJson(feature)),
+                        features: list.map(feature => toGeoJson(feature, map)),
                     });
                 })
                 .catch(err => {
@@ -86,7 +86,7 @@ class Map extends React.Component {
         });
 
         // For each result that comes back, convert the data to geoJSON
-        function toGeoJson(weatherItem) {
+        function toGeoJson(weatherItem, map) {
             const feature = {
                 type: 'Feature',
                 properties: {
