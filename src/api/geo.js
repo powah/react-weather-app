@@ -49,6 +49,17 @@ export const getCurrentWeatherForCity = city => {
     return callOpenWeatherApi(request);
 };
 
+export const getCurrentWeatherForId = id => {
+    const params = {
+        id,
+        units: 'metric',
+        lang: 'en',
+        appid: OPEN_WEATHER_API_KEY,
+    };
+    const request = fetch(`${OPEN_WEATHER_URI}/weather?${qs.stringify(params)}`);
+    return callOpenWeatherApi(request);
+};
+
 export const getCurrentWeatherByCoords = (lat, lon) => {
     const params = {
         lat,

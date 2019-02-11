@@ -15,6 +15,7 @@ class App extends Component {
             latitude: null,
             longitude: null,
             forecast: null,
+            favorite: null,
             favorites: this.getFavorites(),
         };
     }
@@ -58,8 +59,11 @@ class App extends Component {
     };
 
     handleFavoriteSearch = e => {
-        const [city, country] = e.target.value.split(',');
-        this.onSubmit(country, city);
+        const favorite = e.target.value;
+        this.setState({ favorite });
+        GeoApi.getCurrentWeatherForId(favorite)
+            .then(forecast => this.setState(mapForecastToState(forecast)))
+            .catch(err => console.error(err));
     };
 
     requestLocation = () =>
@@ -78,7 +82,7 @@ class App extends Component {
         );
 
     render() {
-        const { forecast, latitude, longitude, favorites, country, city } = this.state;
+        const { forecast, latitude, longitude, favorites, favorite } = this.state;
 
         return (
             <div className={styles.App}>
@@ -87,12 +91,9 @@ class App extends Component {
                         <h1>Weather forecast</h1>
                         {favorites && favorites.length > 0 && (
                             <form>
-                                <select
-                                    onChange={this.handleFavoriteSearch}
-                                    value={country && city ? city + ',' + country.value : ''}
-                                >
-                                    {favorites.map(({ country, city }) => (
-                                        <option key={city + ',' + country.value} value={city + ',' + country.value}>
+                                <select onChange={this.handleFavoriteSearch} value={favorite ? favorite : ''}>
+                                    {favorites.map(({ id, country, city }) => (
+                                        <option key={id} value={id}>
                                             {city + ', ' + country.value}
                                         </option>
                                     ))}
